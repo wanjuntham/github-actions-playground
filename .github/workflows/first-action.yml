@@ -14,6 +14,7 @@ jobs:
   create_release_notes:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Release notes generator
         uses: Decathlon/release-notes-generator-action@v3.1.5
         env:
