@@ -22,4 +22,4 @@ jobs:
       - name: Commit release notes to repo
         uses: EndBug/add-and-commit@v7
         with:
-          default_actor: github_actions
+          default_author: github_actions
