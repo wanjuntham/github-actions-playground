@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: 16
       - name: install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
   create_release_notes:
     runs-on: ubuntu-latest
     steps:
@@ -19,5 +19,7 @@ jobs:
         uses: Decathlon/release-notes-generator-action@v3.1.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Print release notes
-        run: cat release_file.md
+      - name: Commit release notes to repo
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_actor: github_actions
