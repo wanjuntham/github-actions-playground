@@ -18,6 +18,8 @@ jobs:
       - name: Release notes generator
         uses: Decathlon/release-notes-generator-action@v3.1.5
         env:
+          USE_MILESTONE_TITLE: true
+          OUTPUT_FOLDER: ./release_notes
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit release notes to repo
         uses: EndBug/add-and-commit@v7
