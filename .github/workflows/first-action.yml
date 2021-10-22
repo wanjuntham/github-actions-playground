@@ -20,8 +20,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: tag-$GITHUB_RUN_ID
-          release_name: release $GITHUB_RUN_ID
+          tag_name: tag-${{ github.run_id }}
+          release_name: release ${{ github.run_id }}
       # - name: Release notes generator
       #   uses: Decathlon/release-notes-generator-action@v3.1.5
       #   env:
