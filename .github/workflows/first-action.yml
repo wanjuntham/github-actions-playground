@@ -15,22 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: tag-${{ github.run_id }}
-          release_name: release ${{ github.run_id }}
-      - name: try parse json
-        run: curl "https://api.github.com/repos/wanjuntham/github-actions-playground/issues?milestone=2&state=all" | jq '.[0]'
-      # - name: Release notes generator
-      #   uses: Decathlon/release-notes-generator-action@v3.1.5
+      # - name: Create release
+      #   uses: actions/create-release@v1
       #   env:
-      #     USE_MILESTONE_TITLE: true
-      #     OUTPUT_FOLDER: ./release_notes
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Commit release notes to repo
-      #   uses: EndBug/add-and-commit@v7
       #   with:
-      #     default_author: github_actions
+      #     tag_name: tag-${{ github.run_id }}
+      #     release_name: release ${{ github.run_id }}
+      - name: get milestone number
+        run: export MILESTONE_NUM=$(cat $GITHUB_EVENT_PATH | jq '.milestone.number')
+      - name: get link to milestone
+        run: export MILESTONE_URL=$(cat $GITHUB_EVENT_PATH | jq '.milestone.url')
+      - name: parse json
+        run: curl "https://api.github.com/repos/wanjuntham/github-actions-playground/issues?milestone=${MILESTONE_NUM}&state=all" | jq '.[].title' | while read i; do echo $i; done
