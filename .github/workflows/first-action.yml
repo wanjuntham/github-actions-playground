@@ -23,7 +23,7 @@ jobs:
           tag_name: tag-${{ github.run_id }}
           release_name: release ${{ github.run_id }}
       - name: try parse json
-        run: curl "https://api.github.com/repos/wanjuntham/github-actions-playground/milestones/2" | jq '.[0]'
+        run: curl "https://api.github.com/repos/wanjuntham/github-actions-playground/issues?milestone=2&state=all" | jq '.[0]'
       # - name: Release notes generator
       #   uses: Decathlon/release-notes-generator-action@v3.1.5
       #   env:
