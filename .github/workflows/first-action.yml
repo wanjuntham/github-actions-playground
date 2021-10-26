@@ -13,6 +13,11 @@ jobs:
         run: yarn install --frozen-lockfile
   create_release_notes:
     runs-on: ubuntu-latest
+    env:
+      MILESTONE_NUM: $(cat $GITHUB_EVENT_PATH | jq '.milestone.number')
+      MILESTONE_URL: $(cat $GITHUB_EVENT_PATH | jq '.milestone.url')
+      MILESTONE_TITLE: $(cat $GITHUB_EVENT_PATH | jq '.milestone.title')
+      MILESTONE_DESCRIPTION: $(cat $GITHUB_EVENT_PATH | jq '.milestone.description')
     steps:
       - uses: actions/checkout@v2
       # - name: Create release
@@ -23,8 +28,8 @@ jobs:
       #     tag_name: tag-${{ github.run_id }}
       #     release_name: release ${{ github.run_id }}
       - name: get milestone number
-        run: export MILESTONE_NUM=$(cat $GITHUB_EVENT_PATH | jq '.milestone.number')
+        run: echo $MILESTONE_NUM
       - name: get link to milestone
-        run: export MILESTONE_URL=$(cat $GITHUB_EVENT_PATH | jq '.milestone.url')
+        run: echo $MILESTONE_URL
       - name: parse json
         run: curl "https://api.github.com/repos/wanjuntham/github-actions-playground/issues?milestone=${MILESTONE_NUM}&state=all" | jq '.[].title' | while read i; do echo $i; done
